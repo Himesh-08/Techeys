@@ -213,6 +213,39 @@ app.post('/api/subscribe', (req, res) => {
   
   if (writeJsonFile(SUBSCRIPTIONS_FILE, subscriptions)) {
     console.log('New Subscription Saved:', newSubscription);
+
+    // Send email alert to office address if SMTP transporter is configured
+    if (transporter) {
+      const emailTo = SMTP_CONFIG.emailTo || SMTP_CONFIG.user;
+      const mailOptions = {
+        from: `"CrimsonStack Web Portal" <${SMTP_CONFIG.user}>`,
+        to: emailTo,
+        subject: `New Newsletter Subscriber: ${email}`,
+        html: `
+          <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; border: 1px solid #1a1a1a; padding: 25px; border-radius: 12px; background-color: #0b0b0b; color: #ffffff;">
+            <h2 style="color: #E63946; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; font-family: Georgia, serif; font-weight: normal; margin-top: 0;">New Subscription</h2>
+            <p style="font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.6;">
+              A new visitor has subscribed to receive design intel and newsletters.
+            </p>
+            <div style="background-color: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 15px; border-radius: 8px; font-size: 16px; color: #E63946; text-align: center; font-weight: bold; margin-top: 20px;">
+              ${email}
+            </div>
+            <p style="font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 15px;">
+              Sent automatically on ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST) from CrimsonStack website.
+            </p>
+          </div>
+        `
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error('SMTP subscription email error:', error);
+        } else {
+          console.log('Subscription notification email dispatched:', info.response);
+        }
+      });
+    }
+
     return res.status(200).json({ success: true, message: 'Subscription successfully saved.' });
   } else {
     return res.status(500).json({ success: false, error: 'Failed to write data to disk.' });
