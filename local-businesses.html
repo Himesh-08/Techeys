@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>CrimsonStack — {industry_title}</title>
+  <meta name="description" content="{industry_subtitle} - Premium digital solutions by CrimsonStack boutique agency."/>
+  <link rel="stylesheet" href="_next/static/css/app/layout.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <script src="script.js" defer></script>
+  <style>
+
+    /* Custom Cursor States */
+    .hover-active-cursor {
+      width: 40px !important;
+      height: 40px !important;
+      background: transparent !important;
+      border: 2px solid #E63946 !important;
+    }
+    .hover-active-blob {
+      width: 180px !important;
+      height: 180px !important;
+      background: radial-gradient(circle, rgba(230,57,70,0.3), transparent 60%) !important;
+    }
+    /* Smooth reveal transitions */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-item.revealed {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+    /* Header glassmorphism */
+    header.scrolled .flex.items-center.justify-between {
+      background-color: rgba(11, 11, 11, 0.75) !important;
+      backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+    }
+    /* Smooth Accordion Answers */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      padding-bottom: 1.5rem;
+    }
+    /* Hamburger Menu Active State */
+    .mobile-menu-active {
+      display: flex !important;
+    }
+    @media (max-width: 1023px) {
+      #nav-menu.mobile-menu-active {
+        position: absolute;
+        top: 100%;
+        left: 1rem;
+        right: 1rem;
+        background: rgba(11, 11, 11, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 1rem;
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 0.5rem;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#0B0B0B] text-white antialiased overflow-x-hidden">
+  <!-- Preloader Screen -->
+  <div id="preloader" class="fixed inset-0 z-[200] bg-[#0B0B0B] grid place-items-center" style="transition: opacity 0.8s ease; opacity:1">
+    <div class="text-center">
+      <div class="font-display text-5xl md:text-7xl">Crimson<span class="text-[#E63946]">Stack</span></div>
+      <div class="mt-6 h-px w-40 mx-auto bg-white/10 overflow-hidden">
+        <div id="preloader-bar" class="h-full w-0 bg-[#E63946]" style="transition: width 0.6s ease;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div id="custom-cursor" class="pointer-events-none fixed z-[100] hidden md:block" style="left:-100px;top:-100px;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:999px;background:#E63946;border:none;transition:width 200ms, height 200ms, background 200ms;mix-blend-mode:difference"></div>
+  <div id="custom-cursor-blur" class="pointer-events-none fixed z-[99] hidden md:block" style="left:-100px;top:-100px;transform:translate(-50%,-50%);width:260px;height:260px;border-radius:999px;background:radial-gradient(circle, rgba(230,57,70,0.18), transparent 60%);filter:blur(20px)"></div>
+
+  <!-- Scroll Progress Bar -->
+  <div id="scroll-progress" class="fixed top-0 left-0 right-0 h-[2px] z-[80] bg-[#E63946] glow-red-sm" style="transform-origin:0% 0%;transform:scaleX(0)"></div>
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-4">
+    <div class="container mx-auto px-4 md:px-8">
+      <div class="flex items-center justify-between rounded-2xl px-4 md:px-6 py-3 transition-all duration-500">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <span class="relative flex h-8 w-8 items-center justify-center rounded-lg bg-[#E63946] glow-red-sm">
+            <span class="absolute inset-0 rounded-lg bg-[#E63946] blur-md opacity-60 group-hover:opacity-100 transition"></span>
+            <span class="relative font-display text-white text-lg leading-none">C</span>
+          </span>
+          <span class="font-display text-xl tracking-tight">Crimson<span class="text-[#E63946]">Stack</span></span>
+        </a>
+        <nav id="nav-menu" class="hidden lg:flex items-center gap-1">
+          <a href="index.html#services" class="relative px-3 py-2 text-sm text-white/80 hover:text-white transition group">Services<span class="absolute left-3 right-3 -bottom-0.5 h-px bg-[#E63946] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span></a>
+          <a href="index.html#industries" class="relative px-3 py-2 text-sm text-white/80 hover:text-white transition group">Industries<span class="absolute left-3 right-3 -bottom-0.5 h-px bg-[#E63946] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span></a>
+          <a href="index.html#portfolio" class="relative px-3 py-2 text-sm text-white/80 hover:text-white transition group">Work<span class="absolute left-3 right-3 -bottom-0.5 h-px bg-[#E63946] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span></a>
+          <a href="index.html#process" class="relative px-3 py-2 text-sm text-white/80 hover:text-white transition group">Process<span class="absolute left-3 right-3 -bottom-0.5 h-px bg-[#E63946] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span></a>
+          <a href="index.html#pricing" class="relative px-3 py-2 text-sm text-white/80 hover:text-white transition group">Pricing<span class="absolute left-3 right-3 -bottom-0.5 h-px bg-[#E63946] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span></a>
+          <a href="index.html#faq" class="relative px-3 py-2 text-sm text-white/80 hover:text-white transition group">FAQ<span class="absolute left-3 right-3 -bottom-0.5 h-px bg-[#E63946] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span></a>
+          <a href="index.html#contact" class="relative px-3 py-2 text-sm text-white/80 hover:text-white transition group">Contact<span class="absolute left-3 right-3 -bottom-0.5 h-px bg-[#E63946] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span></a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <a href="index.html#contact" class="hidden md:inline-flex">
+            <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow py-2 btn-shine bg-[#E63946] hover:bg-[#E63946] text-white rounded-full px-5 h-10 glow-red-sm">Book a call <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 ml-1" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+          </a>
+          <button id="mobile-menu-btn" class="lg:hidden h-10 w-10 grid place-items-center rounded-full border border-white/10 bg-white/5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu w-5 h-5" aria-hidden="true"><path d="M4 12h16"></path><path d="M4 18h16"></path><path d="M4 6h16"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative pt-32 md:pt-40">
+    <!-- Background glows -->
+    <div class="absolute inset-0 -z-10 overflow-hidden" style="opacity:1">
+      <div class="absolute inset-0 grid-bg radial-mask opacity-20"></div>
+      <div class="absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full bg-[#E63946] opacity-5 blur-[140px] blob"></div>
+      <div class="absolute top-20 -right-40 w-[600px] h-[600px] rounded-full bg-[#7a1b23] opacity-15 blur-[140px] blob" style="animation-delay:-6s"></div>
+      <div class="noise"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="pb-16 md:pb-24">
+      <div class="container mx-auto px-4 md:px-8">
+        <div class="max-w-4xl">
+          <div class="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-xs md:text-sm mb-6 reveal-item">
+            <span class="h-2 w-2 rounded-full bg-[#E63946] pulse-glow"></span>
+            <span class="text-white/80">Tailored Solutions by Industry</span>
+          </div>
+          <div class="flex items-center gap-4 mb-6 reveal-item">
+            <div class="h-14 w-14 rounded-2xl grid place-items-center bg-[#E63946]/10 border border-[#E63946]/30">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E63946" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-store"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path><path d="M2 7h20"></path><path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"></path></svg>
+            </div>
+            <h1 class="font-display text-4xl md:text-6xl lg:text-7xl tracking-tight text-white">Local Businesses</h1>
+          </div>
+          <p class="font-display text-xl md:text-2xl text-crimson-gradient mb-8 leading-tight reveal-item">Bespoke digital platforms that drive foot traffic and calls.</p>
+          <p class="text-base md:text-lg text-white/70 max-w-2xl leading-relaxed mb-8 reveal-item">For boutique shops, interior designers, local agencies, and premium services looking to establish a premium local authority.</p>
+          <div class="flex flex-col sm:flex-row gap-4 reveal-item">
+            <a href="index.html#contact">
+              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors bg-[#E63946] hover:bg-[#E63946]/90 text-white rounded-full h-12 px-8 text-sm glow-red">Inquire about our experience <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 ml-1" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+            </a>
+            <a href="index.html#industries">
+              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors border shadow-sm rounded-full h-12 px-8 text-sm border-white/15 bg-white/5 hover:bg-white/10 text-white">Back to industries</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 md:py-24 bg-[#0a0a0a] border-y border-white/5">
+      <div class="container mx-auto px-4 md:px-8">
+        <h2 class="font-display text-3xl md:text-4xl text-white mb-12 text-center">Core Industry Solutions</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          
+          <div class="grad-border rounded-2xl p-6 md:p-8 bg-[#121212] border border-white/5 reveal-item">
+            <h3 class="font-display text-xl md:text-2xl text-white mb-3">Google Maps & Local Presence</h3>
+            <p class="text-white/60 text-sm md:text-base leading-relaxed">Optimized map cards and location directions directly linked.</p>
+          </div>
+        
+          <div class="grad-border rounded-2xl p-6 md:p-8 bg-[#121212] border border-white/5 reveal-item">
+            <h3 class="font-display text-xl md:text-2xl text-white mb-3">Local Review Highlights</h3>
+            <p class="text-white/60 text-sm md:text-base leading-relaxed">Google Business review cards display live client testimonials.</p>
+          </div>
+        
+          <div class="grad-border rounded-2xl p-6 md:p-8 bg-[#121212] border border-white/5 reveal-item">
+            <h3 class="font-display text-xl md:text-2xl text-white mb-3">WhatsApp Quick-Order</h3>
+            <p class="text-white/60 text-sm md:text-base leading-relaxed">Direct messaging paths for bookings, queries, or product pickups.</p>
+          </div>
+        
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Specific FAQ -->
+    <section class="py-16 md:py-24">
+      <div class="container mx-auto px-4 md:px-8">
+        <div class="grid md:grid-cols-5 gap-10 md:gap-16">
+          <div class="md:col-span-2">
+            <div class="reveal-item">
+              <div class="text-xs uppercase tracking-[0.3em] text-[#E63946] mb-4">FAQ</div>
+              <h2 class="font-display text-3xl md:text-4xl leading-tight">Industry questions, answered.</h2>
+              <p class="mt-6 text-white/60 text-sm md:text-base leading-relaxed">Want more custom details regarding our scoping? Ask our team directly during a discovery strategy session.</p>
+              <a href="index.html#contact">
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors shadow h-9 px-4 py-2 mt-8 rounded-full bg-white text-black hover:bg-white/90">Get in touch <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 ml-2" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+              </a>
+            </div>
+          </div>
+          <div class="md:col-span-3">
+            <div class="w-full flex flex-col">
+              
+          <div class="faq-item border-b border-white/10">
+            <h3>
+              <button type="button" class="faq-btn flex flex-1 items-center justify-between font-medium transition-all text-left py-6 text-lg md:text-xl font-display hover:no-underline w-full" data-cursor="true">
+                <span>Do we need a large budget?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="faq-chevron h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+              </button>
+            </h3>
+            <div class="faq-answer">
+              <p>We have packages (like our Essential tier) optimized specifically for small business budgets.</p>
+            </div>
+          </div>
+        
+          <div class="faq-item border-b border-white/10">
+            <h3>
+              <button type="button" class="faq-btn flex flex-1 items-center justify-between font-medium transition-all text-left py-6 text-lg md:text-xl font-display hover:no-underline w-full" data-cursor="true">
+                <span>Do you list opening hours?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="faq-chevron h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+              </button>
+            </h3>
+            <div class="faq-answer">
+              <p>Yes. We build clean structured timetables and Schema markup to show active hours on search.</p>
+            </div>
+          </div>
+        
+          <div class="faq-item border-b border-white/10">
+            <h3>
+              <button type="button" class="faq-btn flex flex-1 items-center justify-between font-medium transition-all text-left py-6 text-lg md:text-xl font-display hover:no-underline w-full" data-cursor="true">
+                <span>How do we get customer calls?</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="faq-chevron h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+              </button>
+            </h3>
+            <div class="faq-answer">
+              <p>We place clear floating 'Call Now' and 'WhatsApp' triggers on mobile for instant calls.</p>
+            </div>
+          </div>
+        
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 md:py-24 border-t border-white/5 bg-[#0a0a0a] relative overflow-hidden">
+      <div class="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-[#E63946] opacity-10 blur-[140px]"></div>
+      <div class="container mx-auto px-4 md:px-8 text-center relative z-10 reveal-item">
+        <h2 class="font-display text-4xl md:text-5xl lg:text-6xl text-white mb-6">Let's craft something memorable.</h2>
+        <p class="text-white/60 text-base md:text-lg max-w-xl mx-auto mb-8">Connect with us today. Schedule a strategy review and receive a transparent pricing quote within 24 hours.</p>
+        <a href="index.html#contact">
+          <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors bg-[#E63946] hover:bg-[#E63946]/90 text-white rounded-full h-14 px-8 text-base glow-red">Start your project <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-5 h-5 ml-2" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  
+
+  <!-- Premium Minimal Footer -->
+  
+
+
+  <!-- Original Premium Footer -->
+  <footer class="pt-20 pb-10 border-t border-white/5"><div class="container mx-auto px-4 md:px-8"><div class="grid md:grid-cols-5 gap-10"><div class="md:col-span-2"><a href="#top" class="flex items-center gap-2"><span class="h-9 w-9 grid place-items-center rounded-lg bg-[#E63946] glow-red-sm font-display">C</span><span class="font-display text-2xl">Crimson<span class="text-[#E63946]">Stack</span></span></a><p class="mt-4 max-w-sm text-white/60 text-sm">A boutique digital studio designing and building premium websites for the world’s most ambitious local businesses.</p><div class="mt-6 flex gap-2"><a href="#" class="h-10 w-10 grid place-items-center rounded-full border border-white/10 bg-white/5 hover:bg-[#E63946] hover:border-[#E63946] transition"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram w-4 h-4" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a><a href="#" class="h-10 w-10 grid place-items-center rounded-full border border-white/10 bg-white/5 hover:bg-[#E63946] hover:border-[#E63946] transition"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin w-4 h-4" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="#" class="h-10 w-10 grid place-items-center rounded-full border border-white/10 bg-white/5 hover:bg-[#E63946] hover:border-[#E63946] transition"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter w-4 h-4" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a><a href="#" class="h-10 w-10 grid place-items-center rounded-full border border-white/10 bg-white/5 hover:bg-[#E63946] hover:border-[#E63946] transition"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github w-4 h-4" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg></a></div></div><div><div class="text-xs uppercase tracking-[0.25em] text-white/40 mb-4">Services</div><ul class="space-y-3"><li><a href="website-design.html" class="text-sm text-white/70 hover:text-[#E63946] transition">Website Design</a></li><li><a href="website-development.html" class="text-sm text-white/70 hover:text-[#E63946] transition">Website Development</a></li><li><a href="seo.html" class="text-sm text-white/70 hover:text-[#E63946] transition">SEO</a></li><li><a href="branding.html" class="text-sm text-white/70 hover:text-[#E63946] transition">Branding</a></li><li><a href="qr-menu.html" class="text-sm text-white/70 hover:text-[#E63946] transition">QR Menu Solutions</a></li><li><a href="whatsapp.html" class="text-sm text-white/70 hover:text-[#E63946] transition">WhatsApp Integrations</a></li><li><a href="maintenance.html" class="text-sm text-white/70 hover:text-[#E63946] transition">Maintenance &amp; Support</a></li></ul></div><div><div class="text-xs uppercase tracking-[0.25em] text-white/40 mb-4">Industries</div><ul class="space-y-3"><li><a href="cafes-restaurants.html" class="text-sm text-white/70 hover:text-[#E63946] transition">Cafés &amp; Restaurants</a></li><li><a href="hotels-resorts.html" class="text-sm text-white/70 hover:text-[#E63946] transition">Hotels &amp; Resorts</a></li><li><a href="salons-spas.html" class="text-sm text-white/70 hover:text-[#E63946] transition">Salons &amp; Spas</a></li><li><a href="gyms-fitness.html" class="text-sm text-white/70 hover:text-[#E63946] transition">Gyms &amp; Fitness</a></li><li><a href="real-estate.html" class="text-sm text-white/70 hover:text-[#E63946] transition">Real Estate</a></li><li><a href="healthcare-clinics.html" class="text-sm text-white/70 hover:text-[#E63946] transition">Healthcare &amp; Clinics</a></li></ul></div><div><div class="text-xs uppercase tracking-[0.25em] text-white/40 mb-4">Company</div><ul class="space-y-3"><li><a href="index.html#services" class="text-sm text-white/70 hover:text-[#E63946] transition">Services</a></li><li><a href="index.html#portfolio" class="text-sm text-white/70 hover:text-[#E63946] transition">Portfolio</a></li><li><a href="index.html#process" class="text-sm text-white/70 hover:text-[#E63946] transition">Process</a></li><li><a href="index.html#pricing" class="text-sm text-white/70 hover:text-[#E63946] transition">Pricing</a></li><li><a href="index.html#faq" class="text-sm text-white/70 hover:text-[#E63946] transition">FAQ</a></li><li><a href="index.html#contact" class="text-sm text-white/70 hover:text-[#E63946] transition">Contact</a></li></ul></div></div><div class="mt-16 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-white/40 text-xs"><div>&copy; 2026 CrimsonStack. All rights reserved.</div><div>Designed to look world-class.</div></div></div></footer>
+
+</body>
+</html>
