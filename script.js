@@ -201,24 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- 8. Contact Inquiry Form Submissions & Express API ---
   const contactForm = document.querySelector("#contact form");
   
-  // Custom interactive state for budget selection buttons
-  const budgetButtons = document.querySelectorAll("#contact button[type='button']");
-  let selectedBudget = "";
-  
-  if (budgetButtons.length > 0) {
-    budgetButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        // Toggle selected state
-        budgetButtons.forEach((b) => {
-          b.classList.remove("bg-[#E63946]", "text-white");
-          b.classList.add("bg-white/5", "text-white/60");
-        });
-        btn.classList.remove("bg-white/5", "text-white/60");
-        btn.classList.add("bg-[#E63946]", "text-white");
-        selectedBudget = btn.textContent.trim();
-      });
-    });
-  }
+
 
   if (contactForm) {
     contactForm.addEventListener("submit", (e) => {
@@ -249,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
           email,
           business,
           industry,
-          budget: selectedBudget || 'None Selected',
+          
           message
         })
       })
@@ -299,10 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Reset form inputs
             contactForm.reset();
-            budgetButtons.forEach((b) => {
-              b.classList.remove("bg-[#E63946]", "text-white");
-              b.classList.add("bg-white/5", "text-white/60");
-            });
             selectedBudget = "";
           });
         } else {
