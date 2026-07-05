@@ -345,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bindNewsletter();
 
   // --- 10. Google Auth Integration ---
-  const googleClientId = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"; // REPLACE WITH YOUR ACTUAL GOOGLE CLIENT ID
+  const googleClientId = "1047929681347-kmo8mm3imocuou1iqaveae0d2kcjb7ph.apps.googleusercontent.com"; // REPLACE WITH YOUR ACTUAL GOOGLE CLIENT ID
 
   function decodeJwt(token) {
     try {
