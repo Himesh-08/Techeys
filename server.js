@@ -100,7 +100,7 @@ if (isConfigured) {
 
 // POST route for contact inquiries
 app.post('/api/inquiry', (req, res) => {
-  const { name, email, business, industry, message } = req.body;
+  const { name, email, phone, business, industry, message } = req.body;
 
   if (!name || !email) {
     return res.status(400).json({ success: false, error: 'Name and email are required.' });
@@ -141,6 +141,10 @@ app.post('/api/inquiry', (req, res) => {
               <tr>
                 <td style="padding: 6px 0; color: rgba(255,255,255,0.5);">Contact Email:</td>
                 <td style="padding: 6px 0; color: #ffffff;"><a href="mailto:${email}" style="color: #E63946; text-decoration: none;">${email}</a></td>
+              </tr>
+              <tr>
+                <td style="padding: 6px 0; color: rgba(255,255,255,0.5);">Phone Number:</td>
+                <td style="padding: 6px 0; color: #ffffff;">${phone || 'Not Provided'}</td>
               </tr>
               <tr>
                 <td style="padding: 6px 0; color: rgba(255,255,255,0.5);">Business Name:</td>

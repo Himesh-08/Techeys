@@ -211,8 +211,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const inputs = contactForm.querySelectorAll("input");
       const name = inputs[0] ? inputs[0].value.trim() : "";
       const email = inputs[1] ? inputs[1].value.trim() : "";
-      const business = inputs[2] ? inputs[2].value.trim() : "";
-      const industry = inputs[3] ? inputs[3].value.trim() : "";
+      const phone = inputs[2] ? inputs[2].value.trim() : "";
+      const business = inputs[3] ? inputs[3].value.trim() : "";
+      const industry = inputs[4] ? inputs[4].value.trim() : "";
       const message = contactForm.querySelector("textarea")?.value.trim() || "";
       
       // Basic validation
